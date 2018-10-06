@@ -12,6 +12,7 @@ get '/zakaz' do
 end
 
 get '/chating' do
+	@error='Страница в процессе разработки.'
 	erb :chating
 end
 
