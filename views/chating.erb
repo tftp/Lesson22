@@ -7,7 +7,7 @@
   </div>
   <div class="form-group">
 	<label>Выберите цвет сообщения</label>
-	<p><select name="colorpicker">
+	<p><select id="color" name="colorpicker">
 	  <option value="#7bd148">Green</option>
 	  <option value="#5484ed">Bold blue</option>
 	  <option value="#a4bdfc">Blue</option>
@@ -26,5 +26,5 @@
 </form>
 
 <script type="text/javascript">
-	$('select[name="colorpicker"]').simplecolorpicker();
+	$('#color').simplecolorpicker();
 </script>
