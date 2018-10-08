@@ -29,11 +29,9 @@ post '/zakaz' do
 		:adres => 'Введите адрес', 
 		:email_name => 'Введите email'}
 	
-	hh.each do |key,value|
-		if params[key] == ''
-			@error = hh[key]
-			return erb :zakaz
-		end
+	@error = hh.select {|k,v| params[k] == ""}.values.join(", ")
+	if @error != ''
+		return erb :zakaz
 	end
 	
 	to_file :file_name=>"./public/users.txt", :name=>params["username"], :adres=>params["adres"], :email_name=>params["email_name"]
