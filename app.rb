@@ -21,6 +21,21 @@ get '/contacts' do
 end
 
 post '/zakaz' do
+	@username = params["username"]
+	@adres = params["adres"]
+	@email_name = params["email_name"]
+	
+	hh={:username => 'Введите имя', 
+		:adres => 'Введите адрес', 
+		:email_name => 'Введите email'}
+	
+	hh.each do |key,value|
+		if params[key] == ''
+			@error = hh[key]
+			return erb :zakaz
+		end
+	end
+	
 	to_file :file_name=>"./public/users.txt", :name=>params["username"], :adres=>params["adres"], :email_name=>params["email_name"]
 	erb "Спасибо за Ваш заказ, мы свяжемся с Вами в ближайшее время."
 end
