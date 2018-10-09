@@ -2,6 +2,7 @@
 require 'rubygems'
 require 'sinatra'
 require 'sinatra/reloader'
+require 'pony'
 
 get '/' do
 	erb :welcome		
@@ -34,12 +35,40 @@ post '/zakaz' do
 		return erb :zakaz
 	end
 	
+
 	to_file :file_name=>"./public/users.txt", :name=>params["username"], :adres=>params["adres"], :email_name=>params["email_name"]
 	erb "Спасибо за Ваш заказ, мы свяжемся с Вами в ближайшее время."
 end
 
 post '/contacts' do
-	to_file :file_name=>"./public/messages.txt", :message=>params["message"], :email_name=>params["email_name"]
+	@email_name = params[:email_name]
+	@message = params[:message]
+	
+	hh={:message => 'Введите текст', 
+		:email_name => 'Введите email'}
+
+	@error = hh.select {|k,v| params[k] == ""}.values.join(", ")
+	if @error != ''
+		return erb :contacts
+	end
+		
+#	Pony.mail({
+#	  :from => params[:email_name],
+#	  :body => params[:message],
+#	  :to => 'lyceum-istra@inbox.ru',
+#	  :subject => " Has contacted you",
+#	  :via => :smtp,
+#	  :via_options => { 
+#		:address              => 'smtp.mail.ru', 
+#		:port                 => '465', 
+#		:user_name            => 'lyceum-istra@inbox.ru', 
+#		:password             => 'c59D36', 
+#		:domain               => 'localhost.localdomain'
+#		}
+#	})
+		
+
+		to_file :file_name=>"./public/messages.txt", :message=>params["message"], :email_name=>params["email_name"]
 	erb "Сообщение отправлено. Спасибо."
 end
 
