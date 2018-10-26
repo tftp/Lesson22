@@ -3,6 +3,19 @@ require 'rubygems'
 require 'sinatra'
 require 'sinatra/reloader'
 require 'pony'
+require 'sqlite3'
+
+configure do
+	@db = SQLite3::Database.new 'school.db'
+	@db.execute 'create table if not exists 
+		"user" 
+		(	"id" integer primary key autoincrement, 
+			"username" text, 
+			"adres" text, 
+			"email" text
+		) '
+end
+
 
 get '/' do
 	erb :welcome		
