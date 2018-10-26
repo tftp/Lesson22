@@ -5,6 +5,10 @@
     <label>Введите Ваш ник</label>
     <input type="text" name="nikname" class="form-control"  placeholder="Your Nikname">
   </div>
+ <div class="form-group">
+    <label>Введите дату</label>
+    <input id="datetimepicker" type="text" name="date_time" class="form-control"  placeholder="Date and time">
+  </div>
   <div class="form-group">
 	<label>Выберите цвет сообщения</label>
 	<p><select id="color" name="colorpicker">
@@ -28,5 +32,6 @@
 <script type="text/javascript">
 	$(function(){
 		$('#color').simplecolorpicker();
+		$('#datetimepicker').datetimepicker();
 	});
 </script>
