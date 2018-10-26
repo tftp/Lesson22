@@ -2,7 +2,6 @@
 require 'rubygems'
 require 'sinatra'
 require 'sinatra/reloader'
-require 'pony'
 require 'sqlite3'
 
 configure do
@@ -47,7 +46,8 @@ post '/zakaz' do
 	if @error != ''
 		return erb :zakaz
 	end
-	
+	@db = get_db
+	@db.execute 'insert into user (username, adres, email) values (?, ?, ?)', [@username, @adres, @email_name]
 
 	to_file :file_name=>"./public/users.txt", :name=>params["username"], :adres=>params["adres"], :email_name=>params["email_name"]
 	erb "Спасибо за Ваш заказ, мы свяжемся с Вами в ближайшее время."
@@ -65,21 +65,6 @@ post '/contacts' do
 		return erb :contacts
 	end
 		
-#	Pony.mail({
-#	  :from => params[:email_name],
-#	  :body => params[:message],
-#	  :to => 'lyceum-istra@inbox.ru',
-#	  :subject => " Has contacted you",
-#	  :via => :smtp,
-#	  :via_options => { 
-#		:address              => 'smtp.mail.ru', 
-#		:port                 => '465', 
-#		:user_name            => 'lyceum-istra@inbox.ru', 
-#		:password             => 'c59D36', 
-#		:domain               => 'localhost.localdomain'
-#		}
-#	})
-		
 
 		to_file :file_name=>"./public/messages.txt", :message=>params["message"], :email_name=>params["email_name"]
 	erb "Сообщение отправлено. Спасибо."
@@ -92,4 +77,8 @@ def to_file hh
 	f.write(hh[:adres]+"\n\n") if hh[:adres]
 	f.write(hh[:message].strip+"\n\n") if hh[:message]
 	f.close
+end
+
+def get_db
+	@db = SQLite3::Database.new 'school.db'
 end
