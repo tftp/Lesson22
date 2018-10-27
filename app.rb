@@ -29,9 +29,6 @@ get '/chating' do
 	erb :chating
 end
 
-get '/contacts' do
-	erb :contacts
-end
 
 post '/zakaz' do
 	@username = params["username"]
@@ -46,11 +43,15 @@ post '/zakaz' do
 	if @error != ''
 		return erb :zakaz
 	end
-	@db = get_db
+	@db = get_db 'school.db'
 	@db.execute 'insert into user (username, adres, email) values (?, ?, ?)', [@username, @adres, @email_name]
 
 	to_file :file_name=>"./public/users.txt", :name=>params["username"], :adres=>params["adres"], :email_name=>params["email_name"]
 	erb "Спасибо за Ваш заказ, мы свяжемся с Вами в ближайшее время."
+end
+
+get '/contacts' do
+	erb :contacts
 end
 
 post '/contacts' do
@@ -70,6 +71,16 @@ post '/contacts' do
 	erb "Сообщение отправлено. Спасибо."
 end
 
+get '/showusers' do
+	@row=''
+	@db = get_db 'school.db'
+	@db.execute 'select * from user' do |r|
+		@row += "<tr><td> #{r['id']} </td><td> #{r['username']} </td><td> #{r['adres']} </td><td> #{r['email']} </td></tr>"
+	end
+	erb :showusers
+end
+
+
 def to_file hh
 	f = File.open(hh[:file_name], "a") 
 	f.write(hh[:name]+"  ") if hh[:name]
@@ -79,6 +90,8 @@ def to_file hh
 	f.close
 end
 
-def get_db
-	@db = SQLite3::Database.new 'school.db'
+def get_db name_db
+	@db = SQLite3::Database.new name_db
+	@db.results_as_hash = true
+	return @db
 end
