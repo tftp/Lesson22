@@ -4,8 +4,15 @@ require 'sinatra'
 require 'sinatra/reloader'
 require 'sqlite3'
 
+def get_db name_db
+	@db = SQLite3::Database.new name_db
+	@db.results_as_hash = true
+	return @db
+end
+
+
 configure do
-	@db = SQLite3::Database.new 'school.db'
+	@db = get_db 'school.db'
 	@db.execute 'create table if not exists 
 		"user" 
 		(	"id" integer primary key autoincrement, 
@@ -74,9 +81,7 @@ end
 get '/showusers' do
 	@row=''
 	@db = get_db 'school.db'
-	@db.execute 'select * from user' do |r|
-		@row += "<tr><td> #{r['id']} </td><td> #{r['username']} </td><td> #{r['adres']} </td><td> #{r['email']} </td></tr>"
-	end
+	@res_db = @db.execute 'select * from user'
 	erb :showusers
 end
 
@@ -90,8 +95,3 @@ def to_file hh
 	f.close
 end
 
-def get_db name_db
-	@db = SQLite3::Database.new name_db
-	@db.results_as_hash = true
-	return @db
-end
