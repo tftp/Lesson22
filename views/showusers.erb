@@ -1,4 +1,5 @@
-<table class='table'>
+<p><h3>Просмотр записей БД.</h3></p>
+<table class="table table-striped">
 	<thead>
 		<tr>
 			<th scope="col">#</th>
@@ -7,13 +8,15 @@
 			<th scope="col">Email</th>
 		</tr>
 	</thead>
-<%@res_db.each do |res|%>
-	<tr>
-		<td><%=res['id']%></td>
-		<td><%=res['username']%></td>
-		<td><%=res['adres']%></td>
-		<td><%=res['email']%></td>
-	</tr>
-<%end%>	
+	<tbody>
+	<%@res_db.each do |res|%>
+		<tr>
+			<td><%=res['id']%></td>
+			<td><%=res['username']%></td>
+			<td><%=res['adres']%></td>
+			<td><%=res['email']%></td>
+		</tr>
+	<%end%>	
+	</tbody>
 </table>
 
