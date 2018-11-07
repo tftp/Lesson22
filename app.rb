@@ -4,15 +4,16 @@ require 'sinatra'
 require 'sinatra/reloader'
 require 'sqlite3'
 
-def get_db name_db
-	@db = SQLite3::Database.new name_db
+def get_db 
+	@db = SQLite3::Database.new 'school.db'
 	@db.results_as_hash = true
-	return @db
 end
 
+before do
+	get_db
+end
 
 configure do
-	@db = get_db 'school.db'
 	@db.execute 'create table if not exists 
 		"user" 
 		(	"id" integer primary key autoincrement, 
@@ -50,7 +51,6 @@ post '/zakaz' do
 	if @error != ''
 		return erb :zakaz
 	end
-	@db = get_db 'school.db'
 	@db.execute 'insert into user (username, adres, email) values (?, ?, ?)', [@username, @adres, @email_name]
 
 	to_file :file_name=>"./public/users.txt", :name=>params["username"], :adres=>params["adres"], :email_name=>params["email_name"]
@@ -80,7 +80,6 @@ end
 
 get '/showusers' do
 	@row=''
-	@db = get_db 'school.db'
 	@res_db = @db.execute 'select * from user'
 	erb :showusers
 end
