@@ -5,6 +5,12 @@ require 'sinatra/reloader'
 require 'sqlite3'
 require 'sinatra/activerecord'
 
+
+set :database, "sqlite3:school.db"
+
+class Users < Activerecord::Base
+end
+
 def get_db 
 	@db = SQLite3::Database.new 'school.db'
 	@db.results_as_hash = true
