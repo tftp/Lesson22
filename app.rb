@@ -2,13 +2,12 @@
 require 'rubygems'
 require 'sinatra'
 require 'sinatra/reloader'
-require 'sqlite3'
 require 'sinatra/activerecord'
 
 
 set :database, "sqlite3:school.db"
 
-class Users < Activerecord::Base
+class Users < ActiveRecord::Base
 end
 
 def get_db 
