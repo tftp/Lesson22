@@ -14,6 +14,7 @@ before do
 end
 
 configure do
+	get_db
 	@db.execute 'create table if not exists 
 		"user" 
 		(	"id" integer primary key autoincrement, 
