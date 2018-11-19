@@ -1,0 +1,23 @@
+<p><h3>Просмотр сообщений.</h3></p>
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th scope="col">#</th>
+			<th scope="col">Email</th>
+			<th scope="col">Message</th>
+			<th scope="col">Date_time</th>
+		</tr>
+	</thead>
+	<tbody>
+	<%@res_db.each do |res|%>
+		<tr>
+			<td><%=res['id']%></td>
+			<td><%=res['email']%></td>
+			<td><%=res['message']%></td>
+			<td><%=res['updated_at']%></td>
+		</tr>
+	<%end%>	
+	</tbody>
+</table>
+
+

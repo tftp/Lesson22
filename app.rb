@@ -10,6 +10,9 @@ set :database, "sqlite3:school.db"
 class Users < ActiveRecord::Base
 end
 
+class Messages < ActiveRecord::Base
+end
+
 
 get '/' do
 	erb :welcome		
@@ -59,15 +62,20 @@ post '/contacts' do
 	if @error != ''
 		return erb :contacts
 	end
-		
-
+	
+	Messages.create :email=>@email_name, :message=>@message	
+	
 	erb "Сообщение отправлено. Спасибо."
 end
 
 get '/showusers' do
-	@row=''
 	@res_db = Users.all
 	erb :showusers
+end
+
+get '/showmess' do
+	@res_db = Messages.all
+	erb :showmess
 end
 
 
