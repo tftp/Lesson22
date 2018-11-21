@@ -39,19 +39,8 @@ get '/contacts' do
 end
 
 post '/contacts' do
-	@email_name = params[:email_name]
-	@message = params[:message]
-	
-	hh={:message => 'Введите текст', 
-		:email_name => 'Введите email'}
-
-	@error = hh.select {|k,v| params[k] == ""}.values.join(", ")
-	if @error != ''
-		return erb :contacts
-	end
-	
-	Messages.create :email=>@email_name, :message=>@message	
-	
+	c=Messages.new params[:mess]
+	c.save
 	erb "Сообщение отправлено. Спасибо."
 end
 
