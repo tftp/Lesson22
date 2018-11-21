@@ -8,9 +8,14 @@ require 'sinatra/activerecord'
 set :database, "sqlite3:school.db"
 
 class Users < ActiveRecord::Base
+	validates :username, presence: true
+	validates :adres, presence: true
+	validates :email, presence: true
 end
 
 class Messages < ActiveRecord::Base
+	validates :email, presence: true
+	validates :message, presence: true
 end
 
 
