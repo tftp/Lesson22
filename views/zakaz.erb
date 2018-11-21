@@ -4,15 +4,15 @@
 <form action="/zakaz" method="POST">
   <div class="form-group">
     <label>Введите Ваше имя</label>
-    <input type="text" name="username" class="form-control"  placeholder="Фамилия Имя" value="<%=@username%>" >
+    <input type="text" name="zakaz[username]" class="form-control"  placeholder="Фамилия Имя" value="" >
   </div>
   <div class="form-group">
     <label>Введите Ваш адрес</label>
-    <input type="text" name="adres" class="form-control"  placeholder="Ваш адрес" value="<%=@adres%>">
+    <input type="text" name="zakaz[adres]" class="form-control"  placeholder="Ваш адрес" value="">
   </div>
   <div class="form-group">
     <label>Введите Ваш Email</label>
-    <input type="email" name="email_name" class="form-control" placeholder="Ваш email" value="<%=@email_name%>">
+    <input type="email" name="zakaz[email]" class="form-control" placeholder="Ваш email" value="">
     <small id="emailHelp" class="form-text text-muted">Мы не будем использовать Ваш email где нибудь ещё.</small>
   </div>
  

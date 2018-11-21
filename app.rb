@@ -29,21 +29,8 @@ end
 
 
 post '/zakaz' do
-	@username = params["username"]
-	@adres = params["adres"]
-	@email_name = params["email_name"]
-	
-	hh={:username => 'Введите имя', 
-		:adres => 'Введите адрес', 
-		:email_name => 'Введите email'}
-	
-	@error = hh.select {|k,v| params[k] == ""}.values.join(", ")
-	if @error != ''
-		return erb :zakaz
-	end
-
-	Users.create :username=>@username, :adres=>@adres, :email=>@email_name
-
+	c=Users.new params[:zakaz]
+	c.save
 	erb "Спасибо за Ваш заказ, мы свяжемся с Вами в ближайшее время."
 end
 
