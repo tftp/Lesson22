@@ -24,6 +24,7 @@ get '/' do
 end
 
 get '/zakaz' do
+	@c=Users.new
 	erb :zakaz
 end
 
@@ -34,19 +35,28 @@ end
 
 
 post '/zakaz' do
-	c=Users.new params[:zakaz]
-	c.save
-	erb "Спасибо за Ваш заказ, мы свяжемся с Вами в ближайшее время."
+	@c=Users.new params[:zakaz]
+	if @c.save
+		erb "Спасибо за Ваш заказ, мы свяжемся с Вами в ближайшее время."
+	else
+		@error=@c.errors.full_messages.first
+		erb :zakaz
+	end
 end
 
 get '/contacts' do
+	@c=Messages.new
 	erb :contacts
 end
 
 post '/contacts' do
-	c=Messages.new params[:mess]
-	c.save
-	erb "Сообщение отправлено. Спасибо."
+	@c=Messages.new params[:mess]
+	if @c.save
+		erb "Сообщение отправлено. Спасибо."
+	else
+		@error=@c.errors.full_messages.first
+		erb :contacts
+	end
 end
 
 get '/showusers' do
