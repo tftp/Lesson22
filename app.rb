@@ -8,7 +8,7 @@ require 'sinatra/activerecord'
 set :database, "sqlite3:school.db"
 
 class Users < ActiveRecord::Base
-	validates :username, presence: true
+	validates :username, presence: true, length: {minimum: 3}
 	validates :adres, presence: true
 	validates :email, presence: true
 end
